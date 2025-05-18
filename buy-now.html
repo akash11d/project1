@@ -5,7 +5,23 @@
   <title>Buy Now</title>
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+<script>
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyANWkWSqHvGDlRoyD00CaJzic56fyn_qJ8",
+    authDomain: "emil-fashion-ebda3.firebaseapp.com",
+    projectId: "emil-fashion-ebda3",
+    storageBucket: "emil-fashion-ebda3.appspot.com",
+    messagingSenderId: "104732916121",
+    appId: "1:104732916121:web:4e50a0b3f0e80bc4c9fb08"
+  };
+
+  // Firebase initialize
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
   <style>
     .modal {
       display: none;

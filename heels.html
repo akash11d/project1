@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Heels - Emil Fashion</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css" />
  <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap');
 
@@ -211,25 +211,13 @@ body {
       <a href="buy-now.html?image=hells/hell6.jpg&name=Fancy%20Heel&price=1200" class="buy-button" target="_blank">Buy Now</a>
       <a href="hells/hell6.jpg" class="view-button" target="_blank">View Product</a>
     </div>
-     <!-- Product 7 -->
-    <div class="product-card">
-      <img src="hells/hell8.jpg" alt="Heel 7">
-      <h3>Fancy Heel</h3>
-      <p>Elegant design with modern touch for any occasion.</p>
-      <a href="buy-now.html?image=hells/hell8.jpg&name=Fancy%20Heel&price=1200" class="buy-button" target="_blank">Buy Now</a>
-      <a href="hells/hell8.jpg" class="view-button" target="_blank">View Product</a>
-    </div>
-
-  </div>
-
-  
- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+     
+<script src="script.js"></script>
 <script>
   function addToCart(name, image, price) {
-    console.log("Adding to cart:", name, image, price);  // Check if price is undefined
-
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+    // Check if product already exists
     const existingProduct = cart.find(item => item.name === name && item.image === image);
 
     if (existingProduct) {
@@ -241,7 +229,6 @@ body {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 </script>
- <script src="script.js"></script>
 
 </body>
 </html>

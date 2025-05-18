@@ -134,4 +134,3 @@ function toggleMenu() {
   document.getElementById("menu").classList.toggle("show");
 }
 
-window.location.href = "admin-dashboard.html";

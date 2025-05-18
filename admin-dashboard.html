@@ -1,126 +1,201 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - Emil Fashion</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class'
-    }
-  </script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Admin Dashboard | Emil Fashion</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #24a1ca, #45badd);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen p-4">
 
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">📊 Emil Fashion Admin Dashboard</h1>
-    <div>
-      <button onclick="toggleDarkMode()" class="px-3 py-1 rounded bg-gray-800 text-white dark:bg-white dark:text-black">Toggle Dark Mode</button>
-      <button onclick="logout()" class="ml-2 px-3 py-1 rounded bg-red-600 text-white">Logout</button>
+<body>
+    <div class="container">
+        <!-- Sidebar Section -->
+        <aside>
+            <div class="toggle">
+                <div class="logo">
+                    <img src="images/logo.png" alt="Emil Fashion Logo">
+                    <h2>Emil<span class="danger">Fashion</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="#" class="active">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Product List</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Customers</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Analytics</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>Messages</h3>
+                    <span class="message-count">27</span>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <h1>Overview</h1>
+            <div class="analyse">
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Total Sales</h3>
+                            <h1>৳65,024</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                            <div class="percentage"><p>+81%</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visits">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Visits</h3>
+                            <h1>24,981</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                            <div class="percentage"><p>-48%</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="searches">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Searches</h3>
+                            <h1>14,147</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                            <div class="percentage"><p>+21%</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-orders">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-table-body"></tbody>
+                </table>
+                <a href="#">Show All</a>
+            </div>
+        </main>
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>Admin</b></p>
+                        <small class="text-muted">Administrator</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="images/profile-1.jpg" alt="Admin Photo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-profile">
+                <div class="logo">
+                    <img src="images/logo.png" alt="Logo">
+                    <h2>Emil Fashion</h2>
+                    <p>Admin Panel</p>
+                </div>
+            </div>
+
+            <div class="reminders">
+                <div class="header">
+                    <h2>Reminders</h2>
+                    <span class="material-icons-sharp">notifications_none</span>
+                </div>
+
+                <div class="notification">
+                    <div class="icon">
+                        <span class="material-icons-sharp">volume_up</span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Product Update</h3>
+                            <small class="text_muted">10:00 AM - 11:00 AM</small>
+                        </div>
+                        <span class="material-icons-sharp">more_vert</span>
+                    </div>
+                </div>
+
+                <div class="notification deactive">
+                    <div class="icon">
+                        <span class="material-icons-sharp">edit</span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Inventory Check</h3>
+                            <small class="text_muted">1:00 PM - 2:00 PM</small>
+                        </div>
+                        <span class="material-icons-sharp">more_vert</span>
+                    </div>
+                </div>
+
+                <div class="notification add-reminder">
+                    <div>
+                        <span class="material-icons-sharp">add</span>
+                        <h3>Add Reminder</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-    <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-xl shadow">Total Orders: <span id="totalOrders">0</span></div>
-    <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-xl shadow">Total Sales: ৳<span id="totalSales">0</span></div>
-    <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-xl shadow">Customers: <span id="totalCustomers">0</span></div>
-  </div>
-
-  <div class="mb-4 flex justify-between items-center">
-    <input type="text" id="searchInput" placeholder="Search by name or phone..." class="px-3 py-2 border rounded w-full md:w-1/3 text-black" onkeyup="filterOrders()">
-    <button onclick="exportToExcel()" class="ml-4 px-4 py-2 bg-green-600 text-white rounded">Export to Excel</button>
-  </div>
-
-  <div id="ordersContainer" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"></div>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyANWkWSqHvGDlRoyD00CaJzic56fyn_qJ8",
-      authDomain: "emil-fashion-ebda3.firebaseapp.com",
-      projectId: "emil-fashion-ebda3",
-      storageBucket: "emil-fashion-ebda3.firebasestorage.app",
-      messagingSenderId: "104732916121",
-      appId: "1:104732916121:web:4e50a0b3f0e80bc4c9fb08"
-
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-    }
-
-    function logout() {
-      firebase.auth().signOut().then(() => window.location.href = 'login.html');
-    }
-
-    function exportToExcel() {
-      let rows = [['Name', 'Phone', 'Product', 'Size', 'Qty', 'Delivery', 'Total']];
-      orderData.forEach(order => {
-        rows.push([order.name, order.phone, order.product, order.size, order.quantity, order.deliveryCharge, order.totalPrice]);
-      });
-      let wb = XLSX.utils.book_new();
-      let ws = XLSX.utils.aoa_to_sheet(rows);
-      XLSX.utils.book_append_sheet(wb, ws, "Orders");
-      XLSX.writeFile(wb, "orders.xlsx");
-    }
-
-    let orderData = [];
-
-    function loadOrders() {
-      db.collection("orders").orderBy("createdAt", "desc").onSnapshot(snapshot => {
-        orderData = [];
-        let totalSales = 0;
-        let customerSet = new Set();
-        let container = document.getElementById("ordersContainer");
-        container.innerHTML = '';
-
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          orderData.push(data);
-          totalSales += data.totalPrice;
-          customerSet.add(data.phone);
-
-          const card = document.createElement('div');
-          card.className = 'p-4 bg-white dark:bg-gray-800 rounded-lg shadow';
-          card.innerHTML = `
-            <img src="${data.image}" alt="Product" class="h-40 w-full object-cover rounded mb-2">
-            <p><strong>Name:</strong> ${data.name}</p>
-            <p><strong>Phone:</strong> ${data.phone}</p>
-            <p><strong>Product:</strong> ${data.product}</p>
-            <p><strong>Size:</strong> ${data.size} | Qty: ${data.quantity}</p>
-            <p><strong>Delivery:</strong> ৳${data.deliveryCharge}</p>
-            <p class="text-green-500 font-bold">Total: ৳${data.totalPrice}</p>
-          `;
-          container.appendChild(card);
-        });
-
-        document.getElementById("totalOrders").textContent = snapshot.size;
-        document.getElementById("totalSales").textContent = totalSales;
-        document.getElementById("totalCustomers").textContent = customerSet.size;
-      });
-    }
-
-    function filterOrders() {
-      const search = document.getElementById("searchInput").value.toLowerCase();
-      const cards = document.getElementById("ordersContainer").children;
-      for (let card of cards) {
-        card.style.display = card.textContent.toLowerCase().includes(search) ? 'block' : 'none';
-      }
-    }
-
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        loadOrders();
-      } else {
-        window.location.href = 'login.html';
-      }
-    });
-  </script>
+    <script src="orders.js"></script>
+    <script src="index.js"></script>
 </body>
+
 </html>
